@@ -61,6 +61,7 @@ module Fog
         attr_reader :auth_token_expiration
         attr_reader :current_user
         attr_reader :current_tenant
+        attr_reader :unscoped_token
 
         def self.data
           @users   ||= {}
@@ -119,6 +120,7 @@ module Fog
           @current_user = self.data[:users].values.find do |u|
             u['name'] == @openstack_username
           end
+          @current_tenant_id = Fog::Mock.random_hex(32)
 
           unless @current_user
             @current_user_id = Fog::Mock.random_hex(32)
